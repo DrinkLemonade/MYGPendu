@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements; //used for keystroke events
 using System.Text; //used by StringBuilder
-using System.Text.RegularExpressions; //is regex overkill? yes. do I have SOME regex knowledge I want to use anyway? also yes.
-using TMPro;
-using Unity.VisualScripting;
+using System.Text.RegularExpressions; //is regex overkill? yes. do I have SOME regex knowledge I want to use anyway? also yes.S
 
 [System.Serializable]
 public class HangmanGame
@@ -13,24 +8,28 @@ public class HangmanGame
     string goalWord = "";
     string goalWordFancy = ""; //includes diacritics and uppercase    
     public string knownWord = "";
+    public GameManager myManager;
 
     const int maxTriesLeft = 6;
-    int currentTriesLeft = maxTriesLeft;
+    int currentTriesLeft;
 
-    public HangmanGame() //constructor. automatically returns HangmanLogic instance
+    public HangmanGame(GameManager passManager) //constructor. automatically returns HangmanLogic instance
     {
+        myManager = passManager;
+        Debug.Log("Starting a hangman session...");
         goalWordFancy = GameManager.instance.GetRandomWord();
-        InitializeNonFancyWord();
+        InitializeNormalizedWord();
         InitalizeKnownWord();
-    } 
+        currentTriesLeft = maxTriesLeft;
+    }
 
-    public int spriteVersion
+    public int SpriteVersion
     {
         get { return maxTriesLeft - currentTriesLeft; }
         //set { spriteVersionTest = value; }
     }
 
-    void InitializeNonFancyWord()
+    void InitializeNormalizedWord()
     {
         //regex: we're essentially "normalizing" the word by brute force.
         goalWord = goalWordFancy.ToLower();
@@ -99,8 +98,8 @@ public class HangmanGame
         }
         else
         {
-            IHMController.instance.UpdateSprite(this);
             currentTriesLeft--;
+            IHMController.instance.UpdateSprite(this);
 
             if (currentTriesLeft == 0)
             {

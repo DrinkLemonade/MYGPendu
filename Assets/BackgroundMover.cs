@@ -6,7 +6,10 @@ public class BackgroundMover : MonoBehaviour
 {
     private SpriteRenderer myRenderer;
     public float speed;
-    // Start is called before the first frame update
+    const int distanceBeforeWrap = -20;
+    const int distanceAfterWrap = 20;
+
+
     void Start()
     {
         myRenderer = this.GetComponent<SpriteRenderer>() as SpriteRenderer;
@@ -14,10 +17,9 @@ public class BackgroundMover : MonoBehaviour
         //TODO: See if I can make a background element disappear only when it's not visible, by tracking if x+sprite width is < camera left bound's x
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position += Vector3.left * speed * Time.deltaTime;
-        if (transform.position.x < -20) transform.position = new Vector3(19,0,0);
+        if (transform.position.x < distanceBeforeWrap) transform.position = new Vector3(distanceAfterWrap, 0,0);
     }
 }

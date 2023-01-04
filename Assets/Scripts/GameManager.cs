@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     static string[] wordsArray;
-    //[SerializeField]
     public HangmanGame currentGame;
 
     public static GameManager instance;
+    GameObject[] allLetterButtons;
 
     static void NewGame()
     {
-        Debug.Log("Starting new game...");
-        instance.currentGame = new HangmanGame();
+        Debug.Log("------Starting a game...------");
+        instance.currentGame = new HangmanGame(instance);
         IHMController.instance.UpdateDisplay(instance.currentGame);
+        IHMController.instance.UpdateSprite(instance.currentGame);
     }
     static void LoadWordList()
     {
@@ -35,22 +33,37 @@ public class GameManager : MonoBehaviour
         return wordsArray[randomNumber];
     }
 
+    public void RestartHangman()
+    {
+        Debug.Log("-------RESTARTING------");
+        ReactivateKeyboard();
+        NewGame();
+        IHMController.instance.UpdateDisplay(instance.currentGame);
+        IHMController.instance.GameOverText("");
+    }
+
+    void ReactivateKeyboard()
+    {
+        allLetterButtons = GameObject.FindGameObjectsWithTag("LetterButton");
+        foreach (GameObject go in allLetterButtons)
+        {
+            LetterButton script = (LetterButton)go.GetComponent("LetterButton"); //casting from Component to LetterButton
+            script.ButtonSetState(true); //enable
+        }
+    }
+
     void Awake()
     {
+        Debug.Log("GameManager is awake");
         instance = this;
         LoadWordList();
         //string goalWordFancy = GetRandomWord();
     }
     
-    // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("GameManager is starting");
         NewGame();   
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

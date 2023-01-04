@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5643507004436237543}
   m_Layer: 5
   m_Name: LetterButton
-  m_TagString: Untagged
+  m_TagString: LetterButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLetter: 
-  homeButton: {fileID: 7211783367171357752}
+  buttonGameObject: {fileID: 7211783367171357752}
   myGUI: {fileID: 7211783367270855615}
 --- !u!1 &7211783367270855613
 GameObject:

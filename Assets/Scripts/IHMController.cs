@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -13,17 +11,15 @@ public class IHMController : MonoBehaviour
     [SerializeField]
     private Sprite[] sprites;
     [SerializeField]
-    TextMeshProUGUI knownWordDisplayGUI;
+    private TextMeshProUGUI knownWordDisplayGUI;
     [SerializeField]
-    TextMeshProUGUI gameOverMessageGUI;
+    private TextMeshProUGUI gameOverMessageGUI;
 
-    private GameObject display;
-    private GameObject gameOver;
+    //private GameObject display;
+    //private GameObject gameOver;
 
     public void UpdateDisplay(HangmanGame currentGame)
     {
-        Debug.Log("Called UpdateDisplay");
-
         knownWordDisplayGUI.text = currentGame.knownWord.ToUpper();
     }
 
@@ -34,12 +30,11 @@ public class IHMController : MonoBehaviour
 
     public void UpdateSprite(HangmanGame currentGame)
     {
-        hangmanImage.sprite = sprites[currentGame.spriteVersion];
+        hangmanImage.sprite = sprites[currentGame.SpriteVersion];
     }
 
     void Awake()
     {
         instance = this;
-        Debug.Log(gameObject.name);
     }
 }
